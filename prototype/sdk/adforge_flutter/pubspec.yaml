@@ -1,0 +1,20 @@
+name: adforge_flutter
+description: Shows AdForge campaign assets inside a Flutter app and reports verified impressions and clicks.
+version: 0.1.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.8.1
+  flutter: '>=3.22.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  shared_preferences: ^2.2.2
+  url_launcher: ^6.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

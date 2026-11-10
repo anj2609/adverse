@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 246 247 251; --surface: 255 255 255; --subtle: 241 243 249; --line: 226 230 240; --ink: 21 26 45; --muted: 100 107 130;
+  --brand: 79 70 229; --brand-soft: 236 234 254; --brand-ink: 255 255 255;
+  --ok: 15 157 88; --ok-soft: 228 246 236; --warn: 183 121 31; --warn-soft: 253 243 220;
+  --bad: 209 52 74; --bad-soft: 253 232 235; --info: 37 99 235; --info-soft: 229 238 254;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: 14 17 32; --surface: 22 26 46; --subtle: 29 34 56; --line: 42 48 80; --ink: 236 239 250; --muted: 152 160 189;
+    --brand: 124 117 255; --brand-soft: 37 37 77; --brand-ink: 14 17 32;
+    --ok: 60 207 134; --ok-soft: 19 48 31; --warn: 240 185 85; --warn-soft: 51 41 15;
+    --bad: 255 107 129; --bad-soft: 58 22 32; --info: 122 167 255; --info-soft: 23 41 73;
+  }
+}
+html, body { background: rgb(var(--bg)); color: rgb(var(--ink)); }
+body { font-feature-settings: "cv11", "ss01"; -webkit-font-smoothing: antialiased; }
+.checker { background-color: rgb(var(--surface)); background-image: conic-gradient(rgb(var(--subtle)) 25%, transparent 0 50%, rgb(var(--subtle)) 0 75%, transparent 0); background-size: 16px 16px; }
+:focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; }

@@ -1,0 +1,19 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+.next/
+.dart_tool/
+build/
+pubspec.lock
+flutter_demo/dart_defines.json
+storage/*
+!storage/.gitkeep
+prototype/server/data/
+prototype/server/node_modules/
+
+# local tooling and build leftovers
+.claude/
+*.tsbuildinfo
+.DS_Store

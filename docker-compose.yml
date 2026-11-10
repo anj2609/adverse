@@ -1,0 +1,40 @@
+# docker compose up --build   ->  dashboard http://localhost:3000, API http://localhost:8000/docs
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-adforge}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-adforge}
+      POSTGRES_DB: ${POSTGRES_DB:-adforge}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-adforge}"]
+      interval: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-adforge}:${POSTGRES_PASSWORD:-adforge}@db:5432/${POSTGRES_DB:-adforge}
+      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@adforge.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
+      STORAGE_PATH: /storage
+      ADFORGE_SDK_PATH: /sdk/adforge   # what "Download app ready for ads" adds to an app
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    volumes: [./storage:/storage, ./flutter_demo/lib/adforge:/sdk/adforge:ro]
+    ports: ["8000:8000"]
+
+  dashboard:
+    build:
+      context: ./dashboard
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    depends_on: [backend]
+    ports: ["3000:3000"]
+
+volumes:
+  pgdata:
